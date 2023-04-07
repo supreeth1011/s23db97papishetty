@@ -1,0 +1,18 @@
+extends layout
+
+block content
+  h1= title
+  - const game = ['game_name','version','price']
+  script.
+    function buy(index)
+        {
+            alert(`You played game ${index+1}`)
+        }
+  - const results = [{ game_name: "GTA", version: 5, price: "300" },{ game_name: "PUBG", version: 3, price: "200" },{ game_name: "COC", version: 4, price: "100" }]
+  div(class='container-fluid')
+    div(class='row')
+      each result,index in results
+        div(class='col-sm-2' onclick =`buy(${index})`)
+          p game_name: #{result.game_name}
+          p version: #{result.version}
+          p price: #{result.price}
