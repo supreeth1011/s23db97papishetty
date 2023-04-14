@@ -16,8 +16,24 @@ exports.game_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: game detail: ' + req.params.id);
 };
 // Handle game create on POST.
-exports.game_create_post = function(req, res) {
-res.send('NOT IMPLEMENTED: game create POST');
+exports.game_create_post = async function(req, res) {
+console.log(req.body)
+let document = new game();
+// We are looking for a body, since POST does not have query parameters.
+// Even though bodies can be in many different formats, we will be picky
+// and require that it be a json object
+// {"game_type":"goat", "cost":12, "size":"large"}
+document.game_name = req.body.game_name;
+document.version = req.body.version;
+document.price = req.body.price;
+try{
+let result = await document.save();
+res.send(result);
+}
+catch(err){
+res.status(500);
+res.send(`{"error": ${err}}`);
+}
 };
 // Handle game delete form on DELETE.
 exports.game_delete = function(req, res) {
