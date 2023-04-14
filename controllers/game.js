@@ -1,8 +1,16 @@
 var game = require('../models/game');
 // List of all games
-exports.game_list = function(req, res) {
-res.send('NOT IMPLEMENTED: game list');
-};
+exports.game_list = async function(req, res) {
+    try{
+    game = await game.find();
+    res.send(game);
+    }
+    catch(err){
+    res.status(500);
+    res.send(`{"error": ${err}}`);
+    }
+    };
+    
 // for a specific game.
 exports.game_detail = function(req, res) {
 res.send('NOT IMPLEMENTED: game detail: ' + req.params.id);
