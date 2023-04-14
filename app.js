@@ -24,7 +24,7 @@ var gameRouter = require('./routes/game');
 var boardRouter = require('./routes/board');
 var selectorRouter = require('./routes/selector');
 var game = require("./models/game");
-
+var resourceRouter = require('./routes/resource');
 var app = express();
 
 // view engine setup
@@ -42,6 +42,7 @@ app.use('/users', usersRouter);
 app.use('/game', gameRouter);
 app.use('/board', boardRouter);
 app.use('/selector', selectorRouter);
+app.use('/resource',resourceRouter);
 
 // We can seed the collection if needed on server start
 async function recreateDB(){
