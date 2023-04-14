@@ -4,11 +4,26 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
+require('dotenv').config();
+const connectionString =
+process.env.MONGO_CON
+mongoose = require('mongoose');
+mongoose.connect(connectionString,
+{useNewUrlParser: true,
+useUnifiedTopology: true});
+
+var db = mongoose.connection;
+//Bind connection to error event
+db.on('error', console.error.bind(console, 'MongoDB connection error:'));
+db.once("open", function(){
+console.log("Connection to DB succeeded")});
+
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
 var boardRouter = require('./routes/board');
 var selectorRouter = require('./routes/selector');
+var game = require("./models/game");
 
 var app = express();
 
@@ -27,6 +42,36 @@ app.use('/users', usersRouter);
 app.use('/game', gameRouter);
 app.use('/board', boardRouter);
 app.use('/selector', selectorRouter);
+
+// We can seed the collection if needed on server start
+async function recreateDB(){
+// Delete everything
+await game.deleteMany();
+let instance1 = new
+game({game_name:"GTA", version:5,
+price:"300"});
+instance1.save().then( function(err,doc) {
+if(err) return console.error(err);
+console.log("First object saved")
+});
+let instance2 = new
+game({game_name:"PUBG", version:3,
+price:"200"});
+instance2.save().then( function(err,doc) {
+if(err) return console.error(err);
+console.log("Second object saved")
+});
+let instance3 = new
+game({game_name:"COC", version:4,
+price:"100"});
+instance3.save().then( function(err,doc) {
+if(err) return console.error(err);
+console.log("Third object saved")
+});
+}
+let reseed = true;
+if (reseed) { recreateDB();}
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
