@@ -1,0 +1,20 @@
+extends layout
+block content
+ h1= title
+ - let gameid = toShow._id
+ - let game_name = toShow.game_name
+ - let version = toShow.version
+ - let price = toShow.price
+ div
+ div.row
+ div(class='gameAttr mr-3') game ID is: 
+ div #{gameid}
+ div.row
+ div(class='gameAttr mr-3') game game_name is:
+ div #{game_name}
+ div.row
+ div(class='gameAttr mr-3') game version is:
+ div #{version}
+ div.row
+ div(class='gameAttr mr-3') game price is:
+ div #{price}
